@@ -1,0 +1,58 @@
+{
+  "name": "synthdef-json-validator",
+  "description": "synthdef json formatter",
+  "version": "0.0.0",
+  "author": "Nao Yonamine <mohayonao@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/mohayonao/synthdef-json-validator/issues"
+  },
+  "dependencies": {
+    "lodash.isplainobject": "^4.0.4",
+    "lodash.sum": "^4.0.2",
+    "lodash.topairs": "^4.1.1",
+    "lodash.values": "^4.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "eater": "^3.0.0-3",
+    "eatest": "^0.4.0",
+    "eslint": "^2.13.1",
+    "eslint-plugin-node": "^1.5.0",
+    "npm-run-all": "^2.2.0",
+    "nyc": "^7.0.0",
+    "power-assert": "^1.4.1"
+  },
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "src",
+    "lib"
+  ],
+  "homepage": "https://github.com/mohayonao/synthdef-json-validator/",
+  "keywords": [
+    "synthdef"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohayonao/synthdef-json-validator.git"
+  },
+  "scripts": {
+    "build": "babel --out-dir=lib src",
+    "clean": "rm -rf lib coverage .nyc_output npm-debug.log",
+    "cover": "nyc --reporter text --reporter html eater",
+    "eater": "eater",
+    "lint": "eslint src test",
+    "postversion": "git push && git push --tags && npm run clean",
+    "prepublish": "npm-run-all clean lint eater build",
+    "preversion": "npm-run-all clean lint eater",
+    "test": "eater --require babel-register",
+    "travis": "npm-run-all lint eater"
+  }
+}
