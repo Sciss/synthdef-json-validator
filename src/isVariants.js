@@ -1,20 +1,46 @@
 "use strict";
 
-const isPlainObject = require("lodash.isplainobject");
-const toValues = require("lodash.values");
+const uniq = require("lodash.uniq");
 
-function isVariants(value, numberOfParams) {
-  return isPlainObject(value) && toValues(value).every(value => isValidVariantValue(value, numberOfParams));
+function isVariants(variants, numberOfParams) {
+  if (!Array.isArray(variants)) {
+    return false;
+  }
+
+  for (let i = 0; i < variants.length; i++) {
+    if (!isValidVariant(variants[i], numberOfParams)) {
+      return false;
+    }
+  }
+
+  const variantNames = variants.map(variant => variant.name);
+
+  if (variantNames.length !== uniq(variantNames).length) {
+    return false;
+  }
+
+  return true;
 }
 
-function isValidVariantValue(value, numberOfParams) {
-  if (!Array.isArray(value)) {
+function isValidVariant(variant, numberOfParams) {
+  if (!isVariantName(variant.name)) {
     return false;
   }
-  if (value.length !== numberOfParams) {
+  if (!Array.isArray(variant.values)) {
     return false;
   }
-  return value.every(x => !Number.isNaN(+x));
+  if (variant.values.length !== numberOfParams) {
+    return false;
+  }
+  return variant.values.every(isValidVariantValue);
+}
+
+function isVariantName(value) {
+  return typeof value === "string" && /^[_a-zA-Z]\w*$/.test(value);
+}
+
+function isValidVariantValue(value) {
+  return !Number.isNaN(+value);
 }
 
 module.exports = isVariants;

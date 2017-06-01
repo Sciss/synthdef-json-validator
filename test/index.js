@@ -15,9 +15,9 @@ test("empty synthdef", () => {
     name: "",
     consts: [],
     paramValues: [],
-    paramIndices: {},
+    paramIndices: [],
     units: [],
-    variants: {}
+    variants: []
   };
 
   assert(validator.validate(synthdef) === true);
@@ -29,7 +29,10 @@ test("synthdef", () => {
     name: "sine",
     consts: [ 0 ],
     paramValues: [ 0.5, 440 ],
-    paramIndices: { amp: { index: 0, length: 1 }, freq: { index: 1, length: 1 } },
+    paramIndices: [
+      { name: "amp", index: 0, length: 1 },
+      { name: "freq", index: 1, length: 1 }
+    ],
     units: [
       [ "Control"     , 1, 0, [                                ], [ 1, 1 ] ],
       [ "SinOsc"      , 2, 0, [ [  0, 1 ], [ -1, 0 ]           ], [ 2    ] ],
@@ -44,7 +47,7 @@ test("synthdef", () => {
 
 test("synthdef[]", () => {
   const synthdef = [
-    { name: "", consts: [], paramValues: [], paramIndices: {}, units: [] }
+    { name: "", consts: [], units: [] }
   ];
 
   assert(validator.validate(synthdef) === true);

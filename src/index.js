@@ -25,10 +25,14 @@ function _validate(synthdef, strict) {
   if (!isConsts(synthdef.consts)) {
     return false;
   }
-  if (!isParamValues(synthdef.paramValues)) {
-    return false;
-  }
-  if (!isParamIndices(synthdef.paramIndices, synthdef.paramValues.length)) {
+  if (synthdef.paramValues != null) {
+    if (!isParamValues(synthdef.paramValues)) {
+      return false;
+    }
+    if (!isParamIndices(synthdef.paramIndices, synthdef.paramValues.length)) {
+      return false;
+    }
+  } else if (strict) {
     return false;
   }
   if (!isUnits(synthdef.units, synthdef.consts.length)) {
