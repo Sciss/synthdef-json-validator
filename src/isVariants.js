@@ -3,6 +3,12 @@
 const uniq = require("lodash.uniq");
 
 function isVariants(variants, numberOfParams) {
+  if (variants && typeof variants === "object" && !Array.isArray(variants)) {
+    variants = Object.keys(variants).map((name) => {
+      return { name, values: variants[name] };
+    });
+  }
+
   if (!Array.isArray(variants)) {
     return false;
   }

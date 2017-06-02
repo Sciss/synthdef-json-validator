@@ -4,6 +4,12 @@ const uniq = require("lodash.uniq");
 const sum = require("lodash.sum");
 
 function isParamIndices(paramIndices, numberOfParams) {
+  if (paramIndices && typeof paramIndices === "object" && !Array.isArray(paramIndices)) {
+    paramIndices = Object.keys(paramIndices).map((name) => {
+      return Object.assign({ name }, paramIndices[name]);
+    });
+  }
+
   if (!Array.isArray(paramIndices)) {
     return false;
   }

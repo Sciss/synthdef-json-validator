@@ -5,6 +5,10 @@ const test = require("eatest");
 const isVariants = require("../src/isVariants");
 
 test("isVariants -> true", () => {
+  assert(isVariants({}, 0) === true);
+  assert(isVariants({}, 1) === true);
+  assert(isVariants({ a: [ 1 ], b: [ 2 ] }, 1) === true);
+
   assert(isVariants([], 0) === true);
   assert(isVariants([], 1) === true);
   assert(isVariants([
@@ -14,6 +18,10 @@ test("isVariants -> true", () => {
 });
 
 test("isVariants -> false", () => {
+  assert(isVariants({ a: null }, 0) === false);
+  assert(isVariants({ a: [ 1 ], b: [ 2, 3 ] }, 1) === false);
+  assert(isVariants(undefined) === false);
+
   assert(isVariants([
     { name: "a", values: null }
   ], 0) === false);
